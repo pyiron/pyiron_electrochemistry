@@ -4,4 +4,4 @@ dependencies:
   - coveralls
   - coverage
   - codacy-coverage
-  - pyiron_module
+  - pyiron_atomistics =0.2.28
