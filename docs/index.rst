@@ -1,9 +1,9 @@
-.. pyiron_module documentation master file
+.. pyiron_electrochemistry documentation master file
 
 .. _index:
 
 
 =============
-pyiron_module
+pyiron_electrochemistry
 =============
 
