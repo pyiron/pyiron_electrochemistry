@@ -1,4 +1,4 @@
-pyiron_module
+pyiron_electrochemistry
 =============
 
 This repository is a template for new pyiron modules similar to the existing modules of the 
@@ -8,7 +8,7 @@ pyiron framework, e.g.
 and 
 [pyiron_contrib](https://github.com/pyiron/pyiron_contrib).
 
-Within this repository, the new module is called `pyiron_module` which should be renamed to `pyiron_IntendedModuleName`.
+Within this repository, the new module is called `pyiron_electrochemistry` which should be renamed to `pyiron_IntendedModuleName`.
 
 We usually collect all files relevant for the continuous integration (CI) pipelines in `.ci_support`, 
 while the actual CI workflows are handled by GitHub and stored in `.github`.
