@@ -50,7 +50,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'pyiron'
+project = u'pyiron_electrochemistry'
 copyright = u'2021, Max-Planck-Institut für Eisenforschung GmbH - Computational Materials Design (CM) Department ' \
             u'All rights reserved'
 
@@ -228,7 +228,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'pyiron.tex', u'pyiron Documentation',
+  ('index', 'pyiron_electrochemistry.tex', u'pyiron_electrochemistry Documentation',
    u'Max-Planck-Institut für Eisenforschung GmbH - Computational Materials Design (CM) Department', 'manual'),
 ]
 
@@ -259,8 +259,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index',
-     'pyiron',
-     u'pyiron Documentation',
+     'pyiron_electrochemistry',
+     u'pyiron_electrochemistry Documentation',
      [u'Max-Planck-Institut für Eisenforschung GmbH - Computational Materials Design (CM) Department'], 1)
 ]
 
@@ -275,10 +275,10 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index',
-   'pyiron',
-   u'pyiron Documentation',
+   'pyiron_electrochemistry',
+   u'pyiron_electrochemistry Documentation',
    u'Max-Planck-Institut für Eisenforschung GmbH - Computational Materials Design (CM) Department',
-   'pyiron',
+   'pyiron_electrochemistry',
    'One line description of project.',
    'Miscellaneous'),
 ]
@@ -295,7 +295,7 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 # texinfo_no_detailmenu = False
 
-main(['-e', '-o', 'apidoc', '../pyiron', '--force'])
+main(['-e', '-o', 'apidoc', '../pyiron_electrochemistry', '--force'])
 
 curdir = os.path.dirname(os.path.abspath(__file__))
 if os.path.exists(os.path.join(curdir, 'source/notebooks')):
