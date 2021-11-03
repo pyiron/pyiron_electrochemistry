@@ -2,3 +2,6 @@ channels:
   - conda-forge
 dependencies:
   - papermill
+  - jupyter
+  - lammps >=2021.05.27
+  - nglview
