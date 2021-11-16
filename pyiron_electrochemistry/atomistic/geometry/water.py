@@ -52,10 +52,16 @@ class WaterGeometryCalculator:
 
     @property
     def water_oxygen_indices(self) -> Union[np.ndarray, list]:
+        """
+        Indices of oxygen atoms that are part of water molecules
+        """
         return self._water_oxygen_indices
 
     @property
     def water_hydrogen_indices(self) -> Union[np.ndarray, list]:
+        """
+        Indices of hydrogen atoms that are part of water molecules
+        """
         return self._water_hydrogen_indices
 
     def _compute_water_bonds(self) -> None:
@@ -89,30 +95,28 @@ class WaterGeometryCalculator:
     @property
     def intra_oh_distances(self) -> Union[list, np.ndarray]:
         """
-
-        Returns:
-
+        Returns list of intra-molecular OH distances
         """
         return self._intra_oh_distances
 
     @property
-    def intra_oh_angles(self) -> Union[list, np.ndarray]:
+    def bond_angles(self) -> Union[list, np.ndarray]:
         """
-
-        Returns:
-
+        Returns list of water bond angles (in radians)
         """
         return self._intra_oh_angles
 
 
-def get_angle_traj_vectors(vec_1, vec_2) -> np.ndarray:
+def get_angle_traj_vectors(vec_1: np.ndarray, vec_2: np.ndarray) -> np.ndarray:
     """
+    Returns the angles between the trajectories of two vectors of the same shape
 
     Args:
-        vec_1:
-        vec_2:
+        vec_1 (ndarray): Vector 1
+        vec_2 (ndarray): Vector 2
 
     Returns:
+        ndarray: The agnle (in radians) between the two vectors
 
     """
-    return np.arccos(np.sum(vec_1 * vec_2, axis=2) / (np.linalg.norm(vec_1, axis=2) * np.linalg.norm(vec_2, axis=2)))
+    return np.arccos(np.sum(vec_1 * vec_2, axis=-1) / (np.linalg.norm(vec_1, axis=-1) * np.linalg.norm(vec_2, axis=-1)))
