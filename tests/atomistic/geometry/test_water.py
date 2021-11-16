@@ -7,7 +7,7 @@ import os
 from pyiron_atomistics.atomistics.structure.atoms import Atoms
 from pyiron_base.generic.hdfio import FileHDFio
 from pyiron_base._tests import ToyJob, TestWithProject
-from pyiron_electrochemistry.atomistic.geometry.water import WaterGeometryCalculator
+from pyiron_electrochemistry.atomistic.geometry.water import WaterGeometryCalculator, get_angle_traj_vectors
 import unittest
 
 
@@ -87,8 +87,12 @@ class TestWaterGeometry(TestWithProject):
         self.assertEqual(self.water_geo.intra_oh_distances.min(), 0.9323863104101667)
 
     def test_intra_oh_angles(self):
-        self.assertEqual(self.water_geo.intra_oh_angles.shape, (11, 27))
-        self.assertTrue(np.allclose(self.water_geo.intra_oh_angles, np.array(self.oh_angles) * np.pi / 180))
+        self.assertEqual(self.water_geo.bond_angles.shape, (11, 27))
+        self.assertTrue(np.allclose(self.water_geo.bond_angles, np.array(self.oh_angles) * np.pi / 180))
+
+    def test_get_angles_traj_vectors(self):
+        self.assertTrue(np.allclose(np.array(self.oh_angles) * np.pi / 180,
+                                    get_angle_traj_vectors(np.array(self.oh_vec_1), np.array(self.oh_vec_2))))
 
 
 if __name__ == '__main__':
