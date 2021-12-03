@@ -15,11 +15,13 @@ __date__ = "Nov 1, 2021"
 
 
 class WaterGeometryCalculator:
-
-    """Class to analyze the geometries of water molecules in an atomistic simulation."""
+    """
+    Class to analyze the geometries of water molecules in an atomistic simulation.
+    """
 
     def __init__(self, job: AtomisticGenericJob, fixed_bonds: bool = True, water_bond_cutoff: float = 1.3):
-        """
+        """Initializing the class
+
         Args:
             job (pyiron_atomistics.atomistics.job.atomistic.AtomisticGenericJob): The given atomistic job
             fixed_bonds (bool): True of the water bonds remain unbroken throughout the simulation
