@@ -16,9 +16,8 @@ __date__ = "Nov 1, 2021"
 
 class WaterGeometryCalculator:
 
-    """
-    Class to analyze the geometries of water molecules in an atomistic simulation.
-    """
+    """Class to analyze the geometries of water molecules in an atomistic simulation."""
+
     def __init__(self, job: AtomisticGenericJob, fixed_bonds: bool = True, water_bond_cutoff: float = 1.3):
         """
         Args:
@@ -52,16 +51,12 @@ class WaterGeometryCalculator:
 
     @property
     def water_oxygen_indices(self) -> Union[np.ndarray, list]:
-        """
-        Indices of oxygen atoms that are part of water molecules
-        """
+        """Indices of oxygen atoms that are part of water molecules."""
         return self._water_oxygen_indices
 
     @property
     def water_hydrogen_indices(self) -> Union[np.ndarray, list]:
-        """
-        Indices of hydrogen atoms that are part of water molecules
-        """
+        """Indices of hydrogen atoms that are part of water molecules."""
         return self._water_hydrogen_indices
 
     def _compute_water_bonds(self) -> None:
@@ -94,16 +89,12 @@ class WaterGeometryCalculator:
 
     @property
     def intra_oh_distances(self) -> Union[list, np.ndarray]:
-        """
-        Returns list of intra-molecular OH distances
-        """
+        """Returns list of intra-molecular OH distances."""
         return self._intra_oh_distances
 
     @property
     def bond_angles(self) -> Union[list, np.ndarray]:
-        """
-        Returns list of water bond angles (in radians)
-        """
+        """Returns list of water bond angles (in radians)."""
         return self._intra_oh_angles
 
 
