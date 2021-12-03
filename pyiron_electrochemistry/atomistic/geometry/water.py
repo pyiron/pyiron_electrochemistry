@@ -7,10 +7,27 @@ from pyiron_atomistics.atomistics.job.atomistic import AtomisticGenericJob
 from pyiron_atomistics.atomistics.structure.atoms import Atoms
 from typing import Tuple, Union
 
+__author__ = "Sudarsan Surendralal"
+__maintainer__ = "Sudarsan Surendralal"
+__email__ = "surendralal@mpie.de"
+__status__ = "production"
+__date__ = "Nov 1, 2021"
+
 
 class WaterGeometryCalculator:
+    """
+    Class to analyze the geometries of water molecules in an atomistic simulation.
+    """
 
     def __init__(self, job: AtomisticGenericJob, fixed_bonds: bool = True, water_bond_cutoff: float = 1.3):
+        """Initializing the class
+
+        Args:
+            job (pyiron_atomistics.atomistics.job.atomistic.AtomisticGenericJob): The given atomistic job
+            fixed_bonds (bool): True of the water bonds remain unbroken throughout the simulation
+            water_bond_cutoff (float): The cutoff radius of a sphere centered at the nucleus of an oxygen atom
+                                        used to determine the number of hydrogen atoms covalently bonded to it
+        """
         self._job = job
         self._fixed_bonds = fixed_bonds
         self._water_bond_cutoff = water_bond_cutoff
@@ -26,7 +43,23 @@ class WaterGeometryCalculator:
 
     @property
     def structure(self) -> Atoms:
+        """
+        The initial structure of the trajectory
+
+        Returns:
+            pyiron_atomistics.atomistics.structure.atoms.Atoms
+        """
         return self._job.structure
+
+    @property
+    def water_oxygen_indices(self) -> Union[np.ndarray, list]:
+        """Indices of oxygen atoms that are part of water molecules."""
+        return self._water_oxygen_indices
+
+    @property
+    def water_hydrogen_indices(self) -> Union[np.ndarray, list]:
+        """Indices of hydrogen atoms that are part of water molecules."""
+        return self._water_hydrogen_indices
 
     def _compute_water_bonds(self) -> None:
         neighbors = self.structure.get_neighbors(num_neighbors=5)
@@ -48,7 +81,7 @@ class WaterGeometryCalculator:
         self._oh_vec_1, self._oh_vec_2 = self._get_intra_oh_vec()
         self._intra_oh_distances = np.stack(np.array([np.linalg.norm(val, axis=2)
                                                       for val in [self._oh_vec_1, self._oh_vec_2]]))
-        self._intra_oh_angles = get_angle(self._oh_vec_1, self._oh_vec_2)
+        self._intra_oh_angles = get_angle_traj_vectors(self._oh_vec_1, self._oh_vec_2)
 
     def _get_intra_oh_vec(self) -> Tuple[np.ndarray, np.ndarray]:
         positions = self._job.output.unwrapped_positions
@@ -58,12 +91,25 @@ class WaterGeometryCalculator:
 
     @property
     def intra_oh_distances(self) -> Union[list, np.ndarray]:
+        """Returns list of intra-molecular OH distances."""
         return self._intra_oh_distances
 
     @property
-    def intra_oh_angles(self) -> Union[list, np.ndarray]:
+    def bond_angles(self) -> Union[list, np.ndarray]:
+        """Returns list of water bond angles (in radians)."""
         return self._intra_oh_angles
 
 
-def get_angle(vec_1, vec_2) -> np.ndarray:
-    return np.arccos(np.sum(vec_1 * vec_2, axis=2) / (np.linalg.norm(vec_1) * np.linalg.norm(vec_2)))
+def get_angle_traj_vectors(vec_1: np.ndarray, vec_2: np.ndarray) -> np.ndarray:
+    """
+    Returns the angles between the trajectories of two vectors of the same shape
+
+    Args:
+        vec_1 (ndarray): Vector 1
+        vec_2 (ndarray): Vector 2
+
+    Returns:
+        ndarray: The agnle (in radians) between the two vectors
+
+    """
+    return np.arccos(np.sum(vec_1 * vec_2, axis=-1) / (np.linalg.norm(vec_1, axis=-1) * np.linalg.norm(vec_2, axis=-1)))
