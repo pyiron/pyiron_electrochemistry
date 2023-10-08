@@ -5,7 +5,7 @@
 import numpy as np
 import os
 from pyiron_atomistics.atomistics.structure.atoms import Atoms
-from pyiron_base.generic.hdfio import FileHDFio
+from pyiron_base import FileHDFio
 from pyiron_base._tests import ToyJob, TestWithProject
 from pyiron_electrochemistry.atomistic.geometry.water import WaterGeometryCalculator, get_angle_traj_vectors
 import unittest
