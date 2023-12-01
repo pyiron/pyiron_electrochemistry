@@ -1,10 +1,24 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from pyiron_base import (
+    GenericJob,
+    GenericParameters,
+    state,
+    Executable,
+    FlattenedStorage,)
 
-class MolecularDynamicsAnalysis:
-    def __init__(self, project, job_list):
+class MDAnalysis(GenericJob):
+    def __init__(self, project, job_name):
+        super().__init__(project, job_name)
+        self._init_project = project
+        
+    def add_jobs(self, job_list, different_project = None):
+        if different_project is not None:
+            self._project = different_project
+        else:
+            self._project = self._init_project   
         self._job_list = job_list
-        self._project = project
+        
         self.energy = []
         self.positions = []
         
