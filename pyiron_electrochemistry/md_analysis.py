@@ -25,14 +25,19 @@ class MDAnalysis(GenericJob):
         for job_name in self._job_list:
             job = self._project.load(job_name, convert_to_object = False)
             # list append in the loop
-            self.energy = np.concatenate((self.energy, job["output/generic/energy_tot"]))            
+            self.energy.append(job["output/generic/energy_tot"])
             if len(self.positions) == 0:
-                self.positions = job["output/generic/positions"]
                 self._structure = job["input/structure"].to_object()
-            else:
-                self.positions = np.concatenate((self.positions, job["output/generic/positions"]))
+            self.positions.append( job["output/generic/positions"] )
         # after the loop change it to numpy array
+        self.energy = np.array(self.energy).flatten()
+        self.positions = np.vstack(np.array(self.positions))
         
+    def plot_energy(self):
+        plt.plot(self.energy)
+        plt.xlabel('Step')
+        plt.ylabel('Energy (eV)')
+
     def plot_energy_histogram(self, bins = 50):
         plt.hist(self.energy, bins = bins)
         plt.axvline(np.mean(self.energy), color ='Black')
@@ -77,6 +82,9 @@ class MDAnalysis(GenericJob):
         for ii in range(bins):
             r = bins_edge[ii] + 0.5* dr
             hist[ii] = V/(len(index1) * len_index2) * hist[ii]  / (4*np.pi*r**2*dr) / traj.shape[0]
+        plt.plot(bins_edge[1:], hist, '-o')
+        plt.xlim(1, 5.5)
+        plt.ylim(0, 2.5)
         return hist, bins_edge
 
                 
